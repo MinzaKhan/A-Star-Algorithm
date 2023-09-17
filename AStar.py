@@ -16,17 +16,16 @@ def AStar(m):
     OPEN.put((f[initial],initial))
     parent ={}
 
-    while(OPEN.empty()!=True):
-
-        
+    while(OPEN.empty()!=True):        
         current = OPEN.get()
         CLOSED.append(current[1])
-
+        #Exit the loop if the doal has been reached.
         if(current[1] == (goal[0], goal[1])):
             break
             
         else:
             y = current[1]
+            #Checking each neighbor of the current node
             for x in m.maze_map[y[0], y[1]]:
                 if(x=='E'):
                     node = (y[0], y[1]+1)
@@ -37,15 +36,12 @@ def AStar(m):
                 if(x=='S'):
                     node = (y[0]+1, y[1])
 
-
                 if(m.maze_map[y[0], y[1]][x]!=0 and node not in CLOSED):
                     g_temp = y[0]+y[1] - node[0] - node[1]
                     h_temp = node[0] + node[1] - goal[0] - goal[1]
                     f_temp = g_temp + h_temp
 
                     if(f_temp < f.get(node, float('inf')) or not any(node in item for item in OPEN.queue)):
-                        
-                        
                         g[node] = g_temp
                         h[node] = h_temp
                         f[node] = f_temp
@@ -62,7 +58,6 @@ def AStar(m):
         goal=parent[goal]
 
     return path
-
 
 
 if __name__=='__main__':
